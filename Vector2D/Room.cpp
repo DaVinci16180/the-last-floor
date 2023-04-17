@@ -10,11 +10,14 @@
 **********************************************************************************/
 
 #include "Room.h"
+#include "Index.h"
 
 // ---------------------------------------------------------------------------------
 
 Room::Room(float posX, float posY, string light, string dark, Geometry* bbox)
 {
+    type = ROOM;
+
     lightImage = new Image(light);
     darkImage = new Image(dark);
     sprite = new Sprite(darkImage);
@@ -36,7 +39,28 @@ Room::~Room()
 
 void Room::Update()
 {
+    if (lit > 0)
+        lit--;
+    else
+        sprite = new Sprite(darkImage);
+}
 
+void Room::OnCollision(Object* obj)
+{
+    if (lit == 0) {
+        lit = 2;
+    }
+    
+    if (obj->Type() == PLAYER)
+    {
+        // acende a luz
+        sprite = new Sprite(lightImage);
+
+        if (lit == 2)
+            Index::audio->Play(LIGHT_SWITCH);
+    }
+
+    lit = 2;
 }
 
 // -------------------------------------------------------------------------------

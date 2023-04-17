@@ -30,6 +30,7 @@ private:
     Image* lightImage;
     Image* darkImage;
     Sprite* sprite = nullptr;
+    int    lit = 0;
 
 public:
     Room(float posX, float posY, string light, string dark, Geometry* bbox);                   // construtor    
@@ -37,6 +38,7 @@ public:
 
     void Update();                          // atualização do objeto
     void Draw();                            // desenho do objeto
+    void OnCollision(Object* obj);     // resolução da colisão
 };
 
 // ---------------------------------------------------------------------------------

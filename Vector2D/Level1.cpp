@@ -38,7 +38,7 @@ void Level1::Init()
 
     // ----------------------
 
-    int amount = 10;
+    int amount = 17;
     RoomCoordinates coordenadas[] = {
         RoomCoordinates {0,0,485,367},
         RoomCoordinates {485,0,372,271},
@@ -50,6 +50,13 @@ void Level1::Init()
         RoomCoordinates {1272,200,448,464},
         RoomCoordinates {0,367,242,395},
         RoomCoordinates {241,562,244,336},
+        RoomCoordinates {485,488,372,152},
+        RoomCoordinates {1057,440,291,200},
+        RoomCoordinates {485,640,475,258},
+        RoomCoordinates {0,762,374,318},
+        RoomCoordinates {374,898,586,182},
+        RoomCoordinates {960,640,388,440},
+        RoomCoordinates {1348,664,572,416},
     };
 
     for (int i = 1; i <= amount; i++) {
@@ -60,6 +67,8 @@ void Level1::Init()
         int halfHeight = ceil((float)c.height / 2.0f);
         scene->Add(new Room(c.x + halfWidth, c.y + halfHeight, path + "-light.png", path + "-dark.png", new Rect(-halfWidth, -halfHeight, halfWidth, halfHeight)), STATIC);
     }
+
+    scene->Add(new Room(window->Width()/2 - 3, window->Height() / 2, "Resources/Level1/Start-light.png", "Resources/Level1/Start-dark.png", new Rect(-100, -100, 99, 99)), STATIC);
 
     // inicia com música
     Index::audio->Play(GONG);

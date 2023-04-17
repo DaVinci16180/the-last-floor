@@ -19,6 +19,7 @@
 
 Player::Player()
 {
+    type = PLAYER;
     gunTimer.Start();
 
     // inicializa controle
@@ -51,7 +52,8 @@ Player::Player()
     anim->Add(WALKING, walking, 12);
 
     // cria bounding box
-    BBox(new Circle(12));
+    //BBox(new Circle(12));
+    BBox(new Point());
 
     // inicializa estado do player
     equipment = PISTOL;
@@ -220,6 +222,30 @@ void Player::Update()
         }
     }
 
+    int xx = 0;
+    int yy = 0;
+
+    // rotaciona nave
+    if (window->KeyDown(VK_RIGHT))
+        xx++;
+    if (window->KeyDown(VK_LEFT))
+        xx--;
+    if (window->KeyDown(VK_UP))
+        yy--;
+    if (window->KeyDown(VK_DOWN))
+        yy++;
+
+    if (!xx && !yy)
+        anim->Select(STILL);
+    else
+        anim->Select(WALKING);
+
+
+    Translate(xx * 100 * gameTime, yy * 100 * gameTime);
+
+    double radianos = std::atan2(-yy, xx);
+    double graus = radianos * 180 / 3.14159;
+    RotateTo(graus);
 
     // atualiza animação
     anim->Select(equipment);

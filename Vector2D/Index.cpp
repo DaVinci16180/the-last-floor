@@ -34,6 +34,7 @@ void Index::Init()
     audio->Add(SHOTGUN_SOUND, "Resources/Shotgun.wav", 3);
     audio->Add(MUSIC, "Resources/Music.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
+    audio->Add(LIGHT_SWITCH, "Resources/LightSwitch.wav");
 
     // bounding box não visível
     viewBBox = false;

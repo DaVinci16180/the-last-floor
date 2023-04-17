@@ -21,7 +21,8 @@
 
 // ------------------------------------------------------------------------------
 
-enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION };
+enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION, LIGHT_SWITCH };
+enum Types  { PLAYER, ZOMBIE, WALL, ROOM, PROJECTILE };
 
 // ------------------------------------------------------------------------------
 
