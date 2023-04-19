@@ -21,7 +21,7 @@
 
 // ------------------------------------------------------------------------------
 
-struct RoomCoordinates {
+struct Coordinates {
     int x;
     int y;
     int width;

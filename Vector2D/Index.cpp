@@ -19,6 +19,7 @@
 // inicializa membros estáticos da classe
 Game* Index::level = nullptr;
 Player* Index::player = nullptr;
+Presence* Index::presence = nullptr;
 Audio* Index::audio = nullptr;
 bool    Index::viewBBox = true;
 
@@ -41,6 +42,7 @@ void Index::Init()
 
     // cria jogador
     player = new Player();
+    presence = new Presence();
 
     // inicializa nível de abertura do jogo
     level = new Home();

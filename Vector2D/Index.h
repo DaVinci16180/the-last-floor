@@ -17,12 +17,13 @@
 #include "Game.h"
 #include "Audio.h"
 #include "Player.h"
+#include "Presence.h"
 #include "Resources.h"
 
 // ------------------------------------------------------------------------------
 
 enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION, LIGHT_SWITCH };
-enum Types  { PLAYER, ZOMBIE, WALL, ROOM, PROJECTILE };
+enum Types  { PLAYER, ZOMBIE, WALL, ROOM, PROJECTILE, PRESENCE };
 
 // ------------------------------------------------------------------------------
 
@@ -33,6 +34,7 @@ private:
 
 public:
     static Player* player;         // jogador 
+    static Presence* presence;
     static Audio* audio;           // sistema de áudio
     static bool viewBBox;           // estado da bounding box
 

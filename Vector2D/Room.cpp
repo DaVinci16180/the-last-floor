@@ -21,6 +21,7 @@ Room::Room(float posX, float posY, string light, string dark, Geometry* bbox)
     lightImage = new Image(light);
     darkImage = new Image(dark);
     sprite = new Sprite(darkImage);
+    //sprite = new Sprite(lightImage);
 
     BBox(bbox);
     MoveTo(posX, posY, Layer::MIDDLE);
@@ -47,20 +48,21 @@ void Room::Update()
 
 void Room::OnCollision(Object* obj)
 {
-    if (lit == 0) {
-        lit = 2;
-    }
-    
-    if (obj->Type() == PLAYER)
+    if (obj->Type() == PRESENCE)
     {
+        if (lit == 0) {
+            lit = 2;
+        }
+
         // acende a luz
         sprite = new Sprite(lightImage);
 
         if (lit == 2)
             Index::audio->Play(LIGHT_SWITCH);
+
+        lit = 2;
     }
 
-    lit = 2;
 }
 
 // -------------------------------------------------------------------------------

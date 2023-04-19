@@ -180,6 +180,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Presence.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +213,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Presence.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
@@ -224,6 +227,7 @@
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

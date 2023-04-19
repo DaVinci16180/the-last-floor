@@ -13,6 +13,7 @@
 #include "Index.h"
 #include "Level1.h"
 #include "Projectile.h"
+#include "Wall.h"
 #include <cmath>
 
 // ---------------------------------------------------------------------------------
@@ -52,8 +53,7 @@ Player::Player()
     anim->Add(WALKING, walking, 12);
 
     // cria bounding box
-    //BBox(new Circle(12));
-    BBox(new Point());
+    BBox(new Circle(12));
 
     // inicializa estado do player
     equipment = PISTOL;
@@ -96,10 +96,30 @@ void Player::Reset()
 
 void Player::OnCollision(Object* obj)
 {
-    //if (obj->Type() == FINISH)
+    if (obj->Type() == WALL)
     {
-        // chegou ao final do nível
-    //    level++;
+        Wall* wall = dynamic_cast<Wall*>(obj);
+
+        int top = wall->Y();
+        int bot = wall->Y() + wall->height;
+        int left = wall->X();
+        int right = wall->X() + wall->width;
+
+        if (x <= left) {
+            MoveTo(wall->X() - 12, Y());
+        }
+
+        else if (x >= right) {
+            MoveTo(wall->X() + wall->width + 12, Y());
+        }
+
+        else if (y >= bot) {
+            MoveTo(X(), wall->Y() + wall->height + 12);
+        }
+
+        else if (y <= top) {
+            MoveTo(X(), wall->Y() - 12);
+        }
     }
 }
 
@@ -115,7 +135,7 @@ void Player::Update()
         gamepad->UpdateState();
 
         // movimenta com o analógico esquerdo
-        Translate(gamepad->Axis(AxisX) * 0.25f * gameTime, gamepad->Axis(AxisY) * 0.25f * gameTime);
+        Translate(gamepad->Axis(AxisX) * 0.15f * gameTime, gamepad->Axis(AxisY) * 0.15f * gameTime);
 
         if (gamepad->Axis(AxisX) != 0 || gamepad->Axis(AxisY) != 0) {
             int xx = gamepad->Axis(AxisX);
@@ -126,6 +146,7 @@ void Player::Update()
             RotateTo(graus);
 
             anim->Select(WALKING);
+            anim->Delay(1 / (max(abs(xx), abs(yy)) * 0.03));
         }
         else {
             anim->Select(STILL);
@@ -216,36 +237,33 @@ void Player::Update()
             }
             
         }
+    }
+    else {
+        int xx = 0;
+        int yy = 0;
 
-        if (gamepad->ButtonPress(Y_BUTTON)) {
+        // rotaciona nave
+        if (window->KeyDown(VK_RIGHT))
+            xx++;
+        if (window->KeyDown(VK_LEFT))
+            xx--;
+        if (window->KeyDown(VK_UP))
+            yy--;
+        if (window->KeyDown(VK_DOWN))
+            yy++;
 
+        Translate(xx * 100 * gameTime, yy * 100 * gameTime);
+
+        double radianos = std::atan2(-yy, xx);
+        double graus = radianos * 180 / 3.14159;
+
+        if (!xx && !yy)
+            anim->Select(STILL);
+        else {
+            anim->Select(WALKING);
+            RotateTo(graus);
         }
     }
-
-    int xx = 0;
-    int yy = 0;
-
-    // rotaciona nave
-    if (window->KeyDown(VK_RIGHT))
-        xx++;
-    if (window->KeyDown(VK_LEFT))
-        xx--;
-    if (window->KeyDown(VK_UP))
-        yy--;
-    if (window->KeyDown(VK_DOWN))
-        yy++;
-
-    if (!xx && !yy)
-        anim->Select(STILL);
-    else
-        anim->Select(WALKING);
-
-
-    Translate(xx * 100 * gameTime, yy * 100 * gameTime);
-
-    double radianos = std::atan2(-yy, xx);
-    double graus = radianos * 180 / 3.14159;
-    RotateTo(graus);
 
     // atualiza animação
     anim->Select(equipment);

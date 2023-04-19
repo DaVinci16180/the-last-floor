@@ -17,6 +17,8 @@
 
 Projectile::Projectile(Player* player, Image* img, float angle)
 {
+    type = PROJECTILE;
+
     // inicializa sprite
     sprite = new Sprite(img);
 
@@ -52,6 +54,12 @@ void Projectile::Update()
     if (x > window->Width() || x < 0 || y > window->Height() || y < 0)
     {
         Level1::scene->Delete();
+    }
+}
+
+void Projectile::OnCollision(Object* obj) {
+    if (obj->Type() == WALL) {
+        MoveTo(-10, -10);
     }
 }
 
