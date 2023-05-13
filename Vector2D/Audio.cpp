@@ -2,7 +2,7 @@
 // Audio (Código Fonte)
 // 
 // Criação:     14 Out 2011
-// Atualização: 27 Set 2021
+// Atualização: 25 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Classe para reproduzir áudio
@@ -19,11 +19,15 @@ Audio::Audio()
     audioEngine = nullptr;
     masterVoice = nullptr;
 
-    // cria uma instância da engine XAudio2
-    if (SUCCEEDED(XAudio2Create(&audioEngine, 0, XAUDIO2_DEFAULT_PROCESSOR)))
+    // inicializa o Component Object Model (COM) para a XAudio2
+    if (SUCCEEDED(CoInitializeEx(NULL, COINIT_MULTITHREADED)))
     {
-        // cria o dispositivo principal de saída de audio
-        audioEngine->CreateMasteringVoice(&masterVoice);
+        // cria uma instância da engine XAudio2
+        if (SUCCEEDED(XAudio2Create(&audioEngine, 0, XAUDIO2_DEFAULT_PROCESSOR)))
+        {
+            // cria o dispositivo principal de saída de audio
+            audioEngine->CreateMasteringVoice(&masterVoice);
+        }
     }
 }
 
@@ -46,7 +50,10 @@ Audio::~Audio()
     if (masterVoice) masterVoice->DestroyVoice();
 
     // libera instância de XAudio2
-    if (audioEngine) audioEngine->Release();  
+    if (audioEngine) audioEngine->Release(); 
+
+    // libera o Component Object Model (COM)
+    CoUninitialize();
 }
 
 // ---------------------------------------------------------------------------------

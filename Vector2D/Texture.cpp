@@ -561,6 +561,9 @@ HRESULT D3D11CreateTextureFromFile(_In_ ID3D11Device* d3dDevice,
 
     // Initialize WIC
     ScopedObject<IWICBitmapDecoder> decoder;
+
+    // O sistema de áudio chama CoInitializeEx(NULL, COINIT_MULTITHREADED), que aparentemente interfere com o funcionamento
+    // da ImagingFactory. Se uma exceção for lançada nesse ponto do programa, crie o objeto Audio antes de carregar imagens.
     HRESULT hr = pWIC->CreateDecoderFromFilename(wString, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &decoder);
     if (FAILED(hr))
         return hr;

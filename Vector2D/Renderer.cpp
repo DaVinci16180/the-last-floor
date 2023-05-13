@@ -2,7 +2,7 @@
 // Renderer (Código Fonte)
 //
 // Criação:     11 Mai 2014
-// Atualização: 06 Out 2021
+// Atualização: 01 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define um renderizador de grupos de sprites
@@ -10,6 +10,7 @@
 **********************************************************************************/
 
 #include "Renderer.h"
+#include "Engine.h"
 #include <algorithm>
 #include <d3dcompiler.h>
 
@@ -143,7 +144,7 @@ void Renderer::BeginPixels()
 
     // limpa a textura para o próximo desenho
     // 0xff000000 = valor 32bits codificado com Alpha transparente
-    memset(videoMemory, 0xff000000, size_t(mappedTex.RowPitch) * window->Height());
+    memset(videoMemory, 0xff000000, mappedTex.RowPitch * int(window->Height()));
 }
 
 // -----------------------------------------------------------------------------
@@ -177,9 +178,9 @@ void Renderer::Draw(Geometry * shape, ulong color)
 
 void Renderer::Draw(Point * point, ulong color)
 {
-    if (point->X() >= 0 && point->X() < window->Width())
-        if (point->Y() >= 0 && point->Y() < window->Height())
-            PlotPixel(int(point->X()), int(point->Y()), color);
+    if (point->X() >= Engine::game->viewport.left && point->X() < Engine::game->viewport.right)
+        if (point->Y() >= Engine::game->viewport.top && point->Y() < Engine::game->viewport.bottom)
+            PlotPixel(int(point->X() - Engine::game->viewport.left), int(point->Y() - Engine::game->viewport.top), color);
 }
 
 // -----------------------------------------------------------------------------
@@ -205,10 +206,10 @@ int Renderer::ClipLine(int& x1, int& y1, int& x2, int& y2)
     // Implementation by André LaMothe from "Tricks of The Windows Game Programming Gurus", SAMS, 2002
 
     // this function clips the sent line using the clipping region defined below
-    int min_clip_x = 0;
-    int min_clip_y = 0;
-    int max_clip_x = window->Width() - 1;
-    int max_clip_y = window->Height() - 1;
+    int min_clip_x = int(Engine::game->viewport.left);
+    int min_clip_y = int(Engine::game->viewport.top);
+    int max_clip_x = int(Engine::game->viewport.right - 1);
+    int max_clip_y = int(Engine::game->viewport.bottom - 1);
 
     // internal clipping codes
     #define CLIP_CODE_C  0x0000
@@ -469,6 +470,11 @@ int Renderer::ClipLine(int& x1, int& y1, int& x2, int& y2)
 
 void Renderer::DrawLine(int a1, int b1, int a2, int b2, ulong color)
 {
+    a1 -= int(Engine::game->viewport.left);
+    b1 -= int(Engine::game->viewport.top);
+    a2 -= int(Engine::game->viewport.left);
+    b2 -= int(Engine::game->viewport.top);
+
     // Symmetric Double Step Line Algorithm by Xialon Wu
     // It's 3 to 4 times faster than the standard Bressenham's algorithm
     // Implementation by Brian Wyvill from "Graphics Gems", Academic Press, 1990
@@ -729,18 +735,38 @@ void Renderer::Draw(Circle * circ, ulong color)
 
 void Renderer::Draw(Poly * pol, ulong color)
 {
-    // this function draws a Poly
     float x1, y1, x2, y2;
+    float x1r, y1r, x2r, y2r;
+    float x1s, y1s, x2s, y2s;
+
     uint i;
+
+    const double PIunder180 = 0.0174532925194444;
+
+    // converte ângulo de rotação para radianos
+    float theta = float(pol->Rotation() * PIunder180);
 
     // loop through and draw a line from vertices 1 to n-1
     for (i = 0; i < pol->vertexCount - 1; ++i)
     {
-        // draw line from ith to ith+1 vertex
-        x1 = pol->vertexList[i].X() * pol->Scale() + pol->X();
-        y1 = pol->vertexList[i].Y() * pol->Scale() + pol->Y();
-        x2 = pol->vertexList[i + 1].X() * pol->Scale() + pol->X();
-        y2 = pol->vertexList[i + 1].Y() * pol->Scale() + pol->Y();
+
+        // aplica rotação aos pontos
+        x1r = float(pol->vertexList[i].X() * cos(theta) - pol->vertexList[i].Y() * sin(theta));
+        y1r = float(pol->vertexList[i].X() * sin(theta) + pol->vertexList[i].Y() * cos(theta));
+        x2r = float(pol->vertexList[i + 1].X() * cos(theta) - pol->vertexList[i + 1].Y() * sin(theta));
+        y2r = float(pol->vertexList[i + 1].X() * sin(theta) + pol->vertexList[i + 1].Y() * cos(theta));
+
+        // aplica escala aos pontos
+        x1s = x1r * pol->Scale();
+        y1s = y1r * pol->Scale();
+        x2s = x2r * pol->Scale();
+        y2s = y2r * pol->Scale();
+
+        // transforma coordenadas locais em globais
+        x1 = pol->X() + x1s;
+        y1 = pol->Y() + y1s;
+        x2 = pol->X() + x2s;
+        y2 = pol->Y() + y2s;
 
         // draw a line clipping to viewport
         Line line(x1, y1, x2, y2);
@@ -749,10 +775,23 @@ void Renderer::Draw(Poly * pol, ulong color)
 
     // now close up polygon
     // draw line from first to last vertex
-    x1 = pol->vertexList[0].X() * pol->Scale() + pol->X();
-    y1 = pol->vertexList[0].Y() * pol->Scale() + pol->Y();
-    x2 = pol->vertexList[i].X() * pol->Scale() + pol->X();
-    y2 = pol->vertexList[i].Y() * pol->Scale() + pol->Y();
+    // aplica rotação aos pontos
+    x1r = float(pol->vertexList[0].X() * cos(theta) - pol->vertexList[0].Y() * sin(theta));
+    y1r = float(pol->vertexList[0].X() * sin(theta) + pol->vertexList[0].Y() * cos(theta));
+    x2r = float(pol->vertexList[i].X() * cos(theta) - pol->vertexList[i].Y() * sin(theta));
+    y2r = float(pol->vertexList[i].X() * sin(theta) + pol->vertexList[i].Y() * cos(theta));
+
+    // aplica escala aos pontos
+    x1s = x1r * pol->Scale();
+    y1s = y1r * pol->Scale();
+    x2s = x2r * pol->Scale();
+    y2s = y2r * pol->Scale();
+
+    // transforma coordenadas locais em globais
+    x1 = pol->X() + x1s;
+    y1 = pol->Y() + y1s;
+    x2 = pol->X() + x2s;
+    y2 = pol->Y() + y2s;
 
     // draw a line clipping to viewport
     Line line(x1, y1, x2, y2);
@@ -993,10 +1032,10 @@ bool Renderer::Initialize(Window * window, Graphics * graphics)
     pixelPlotSprite.x = window->CenterX();
     pixelPlotSprite.y = window->CenterY();
     pixelPlotSprite.scale = 1.0f;
-    pixelPlotSprite.depth = 0.0f;
+    pixelPlotSprite.depth = 0.01f;
     pixelPlotSprite.rotation = 0.0f;
-    pixelPlotSprite.width = window->Width();
-    pixelPlotSprite.height = window->Height();
+    pixelPlotSprite.width = uint(window->Width());
+    pixelPlotSprite.height = uint(window->Height());
     pixelPlotSprite.texture = pixelPlotView;
     pixelPlotSprite.texCoord.x = 0.0f;
     pixelPlotSprite.texCoord.y = 0.0f;

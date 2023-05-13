@@ -2,7 +2,7 @@
 // Renderer (Arquivo de Cabeçalho)
 //
 // Criação:     11 Mai 2014
-// Atualização: 08 Set 2021
+// Atualização: 01 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define um renderizador de grupos de sprites

@@ -2,7 +2,7 @@
 // Font (Arquivo de Cabeçalho)
 //
 // Criação:     07 Out 2011
-// Atualização: 08 Set 2021
+// Atualização: 25 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Uma classe para representar fontes e mostrar texto
@@ -43,7 +43,7 @@ public:
         float y,                                // posição y do texto
         string text,                            // string a ser exibida
         Color color = { 1, 1, 1, 1 },           // cor do texto
-        float depth = Layer::FRONT,             // profundidade do texto
+        float depth = 0.0f,                     // profundidade do texto
         float scale = 1.0f,                     // escala do texto
         float rotation = 0.0f);                 // rotação do texto   
 };

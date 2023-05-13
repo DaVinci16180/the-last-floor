@@ -2,7 +2,7 @@
 // Geometry (Arquivo de Cabeçalho)
 //
 // Criação:     05 Oct 2007
-// Atualização: 07 Out 2021
+// Atualização: 01 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Agrupa a definição de todas as formas geométricas suportadas:
@@ -47,39 +47,38 @@ public:
     Geometry();                                         // construtor
     virtual ~Geometry();                                // destrutor
 
-    virtual float X() const                             // coordenada x da geometria
+    virtual float X() const                             // retorna coordenada x
     { return x; }            
     
-    virtual float Y() const                             // coordenada y da geometria
+    virtual float Y() const                             // retorna coordenada y
     { return y; }    
-
     
-    virtual float Scale() const                         // retorna escala da geometria
+    virtual float Scale() const                         // retorna escala
     { return scale; }
 
-    virtual float Rotation() const                      // retorna rotação da geometria
+    virtual float Rotation() const                      // retorna rotação
     { return rotation; }
 
     virtual uint Type() const                           // retorna tipo 
     { return type; }        
     
-    virtual void Translate(float dx, float dy)          // move a geometria pelo delta (dx,dy)
+    virtual void Translate(float dx, float dy)          // move a geometria por (dx,dy)
     { x += dx; y += dy; }
 
-    virtual void Scale(float factor)                    // amplia/reduz geometria por um fator de escala
+    virtual void MoveTo(float px, float py)             // move a geometria para a posição (px,py)
+    { x = px; y = py; }
+
+    virtual void Scale(float factor)                    // amplia ou reduz a geometria por um fator
     { scale *= factor; }
 
-    virtual void ScaleTo(float value)                   // ajusta escala para o valor indicado
+    virtual void ScaleTo(float value)                   // ajusta escala para novo valor
     { scale = value; }
 
     virtual void Rotate(float angle)                    // rotaciona geometria por um ângulo
     { rotation += angle; }
 
-    virtual void RotateTo(float value)                  // ajusta a rotação para o valor indicado
+    virtual void RotateTo(float value)                  // ajusta otação para novo valor
     { rotation = value; }
-
-    virtual void MoveTo(float px, float py)             // move a geometria para a posição (px,py)
-    { x = px; y = py; }
 };
 
 // --------------------------------------------------------------------------
@@ -93,7 +92,8 @@ public:
     Point(float posX, float posY);                      // construtor usando pontos-flutuantes
     Point(int posX, int posY);                          // construtor usando inteiros
     
-    float Distance(const Point & p) const;              // calcula a distância até outro ponto
+    // retorna a distância entre os pontos
+    static float Distance(const Point& pa, const Point& pb);              
 };
 
 // --------------------------------------------------------------------------
@@ -109,10 +109,15 @@ public:
     Line(float x1, float y1, float x2, float y2);       // construtor usando pontos-flutuantes
     Line(Point& pa, Point& pb);                         // construtor usando pontos
 
+    void Rotate(float angle);                           // rotaciona linha por um ângulo
+
     float Ax() const { return x + (a.X() * scale); }    // coordenadas do mundo do ponto A eixo x
     float Ay() const { return y + (a.Y() * scale); }    // coordenadas do mundo do ponto A eixo y
     float Bx() const { return x + (b.X() * scale); }    // coordenadas do mundo do ponto B eixo x
     float By() const { return y + (b.Y() * scale); }    // coordenadas do mundo do ponto B eixo y
+
+    // retorna o ângulo da linha formada pelos pontos
+    static float Angle(const Point& pa, const Point& pb);
 };
 
 // --------------------------------------------------------------------------
@@ -161,6 +166,10 @@ public:
 
 class Poly : public Geometry
 {
+private:
+    Circle * bbox;                                      // bounding box do polígono
+    void     BuildBBox();                               // cria a bounding box do polígono
+
 public:
     uint      vertexCount;                              // número de vértices 
     Point*    vertexList;                               // vetor de vértices do polígono
@@ -171,6 +180,14 @@ public:
     ~Poly();                                            // destructor
 
     const Poly& operator=(const Poly& p);               // operador de atribuição
+
+    void Translate(float dx, float dy);                 // move polígono por (dx,dy)
+    void MoveTo(float px, float py);                    // move plígono para a posição (px,py)
+    void Scale(float factor);                           // amplia ou reduz geometria por um fator
+    void ScaleTo(float factor);                         // ajusta a escala para novo valor
+
+    float Scale() const;                                // retorna escala do polígono    
+    Circle * BBox() const { return bbox; }              // retorna bounding box do polígono
 }; 
 
 // --------------------------------------------------------------------------
@@ -189,9 +206,11 @@ public:
     void Remove(Geometry * s);                          // remove geometria da lista
 
     void Translate(float dx, float dy);                 // move a geometria pelo delta (dx,dy)
-    void Scale(float factor);                           // amplia/reduz geometria por um fator de escala
-    void ScaleTo(float value);                          // ajusta escala para o valor indicado
     void MoveTo(float px, float py);                    // move a geometria para a posição (px,py)
+    void Scale(float factor);                           // altera escala da geometria    
+    void ScaleTo(float factor);                         // ajusta a escala para novo valor
+
+    float Scale() const;                                // retorna escala da geometria
 };
 
 // --------------------------------------------------------------------------

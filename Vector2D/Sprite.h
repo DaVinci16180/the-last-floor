@@ -2,7 +2,7 @@
 // Sprite (Arquivo de Cabeçalho)
 // 
 // Criação:     11 Jul 2007
-// Atualização: 11 Set 2021
+// Atualização: 12 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define uma classe para representar um sprite
@@ -37,6 +37,9 @@ struct Color
     float g;
     float b;
     float a;
+
+    Color() : 
+        r(0), g(0), b(0), a(1) {}
 
     Color(float red, float green, float blue, float alpha) :
         r(red), g(green), b(blue), a(alpha) {}
@@ -87,6 +90,11 @@ public:
         float x, float y, float z = Layer::MIDDLE,            // coordenadas da tela
         float scale = 1.0f, float rotation = 0.0f,            // escala e rotação
         Color color = { 1, 1, 1, 1 });                        // efeito de cor
+
+    void Draw(                                                // desenha sprite
+        float x, float y, float z,                            // coordenadas da tela
+        float scale, float rotation,                          // escala e rotação
+        const Color & color, const RECT & region);            // cor e região
 };
 
 // ---------------------------------------------------------------------------------

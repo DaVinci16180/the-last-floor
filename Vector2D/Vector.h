@@ -2,7 +2,7 @@
 // Vector (Arquivo de Cabeçalho)
 // 
 // Criação:     18 Nov 2011
-// Atualização: 19 Out 2021
+// Atualização: 25 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Classe para representar um vetor
@@ -29,11 +29,12 @@ public:
     Vector();                           // construtor padrão
     Vector(float ang, float mag);       // construtor com ângulo e magnitude
 
-    void RotateTo(float value);         // ajusta rotação para valor indicado
+    void Scale(float factor);           // amplia ou reduz vetor por um fator
     void ScaleTo(float value);          // ajusta rotação para valor indicado
     void Rotate(float theta);           // rotaciona vetor por ângulo em graus
-    void Scale(float factor);           // amplia ou reduz vetor por um fator
-
+    void RotateTo(float value);         // ajusta rotação para valor indicado
+    void Add(const Vector& v);          // adiciona vetor recebido por parâmetro
+    
     float Angle() const;                // retorna ângulo do vetor
     float Magnitude() const;            // retorna magnitude do vetor
     float XComponent() const;           // retorna componente X do vetor
@@ -44,11 +45,11 @@ public:
 // ---------------------------------------------------------------------------------
 // Funções Membro Inline
 
-inline void Vector::RotateTo(float value)
-{ angle = value; }
-
 inline void Vector::ScaleTo(float value)
 { magnitude = value; }
+
+inline void Vector::RotateTo(float value)
+{ angle = value; }
 
 inline float Vector::Angle() const
 { return angle; }

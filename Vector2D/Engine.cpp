@@ -2,7 +2,7 @@
 // Engine (Código Fonte)
 //
 // Criação:     15 Mai 2014
-// Atualização: 27 Set 2021
+// Atualização: 25 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   A função da Engine é rodar jogos criados a partir da classe
@@ -34,10 +34,6 @@ Timer      Engine::timer;                   // medidor de tempo
 
 Engine::Engine()
 {
-    // inicializa Component Object Model - COM (DirectX)
-    if (FAILED(CoInitializeEx(NULL, COINIT_MULTITHREADED)))
-        return;
-
     window     = new Window();
     graphics   = new Graphics();
     renderer   = new Renderer();
@@ -51,9 +47,6 @@ Engine::~Engine()
     delete renderer;
     delete graphics;
     delete window;
-
-    // libera Component Object Model (COM)
-    CoUninitialize();
 }
 
 // -----------------------------------------------------------------------------

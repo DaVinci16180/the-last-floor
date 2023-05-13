@@ -2,7 +2,7 @@
 // Vector (Codigo Fonte)
 // 
 // Criação:     18 Nov 2011
-// Atualização: 19 Out 2021
+// Atualização: 25 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Classe para representar um vetor
@@ -33,6 +33,13 @@ Vector::Vector(float ang, float mag)
 
 // ------------------------------------------------------------------------------
 
+void Vector::Scale(float factor)
+{
+    magnitude *= factor;
+}
+
+// ------------------------------------------------------------------------------
+
 void Vector::Rotate(float theta)
 {
     angle -= theta;
@@ -44,9 +51,52 @@ void Vector::Rotate(float theta)
 
 // ------------------------------------------------------------------------------
 
-void Vector::Scale(float factor)
+void Vector::Add(const Vector& v)
 {
-    magnitude *= factor;
+    float rx, ry;
+
+    rx = XComponent() + v.XComponent();
+    ry = YComponent() + v.YComponent();
+
+    magnitude = sqrt(pow(rx, 2.0f) + pow(ry, 2.0f));
+
+    // ajusta o ângulo de acordo com o quadrante do vetor resultante
+    if (rx > 0)
+    {
+        // 1o Quadrante
+        if (ry >= 0)
+        {
+            // acha o ângulo em radianos
+            angle = atan(ry / rx);
+            // converte de radianos para graus
+            angle = float((180.0 * angle) / PI);
+        }
+        // 4o Quadrante
+        else // (ry < 0)
+        {
+            // acha o ângulo em radianos
+            angle = atan(ry / rx);
+            // converte de radianos para graus
+            angle = float((180.0 * angle) / PI) + 360.0f;
+        }
+    }
+    // 2o e 3o Quadrante
+    else if (rx < 0)
+    {
+        // acha o ângulo em radianos
+        angle = atan(ry / rx);
+        // converte de radianos para graus
+        angle = float((180.0 * angle) / PI) + 180.0f;
+    }
+    else // (rx == 0)
+    {
+        if (ry > 0)
+            angle = 90.0f;
+        else if (ry < 0)
+            angle = 270.0f;
+        else // (ry == 0)
+            angle = v.angle;
+    }
 }
 
 // ------------------------------------------------------------------------------

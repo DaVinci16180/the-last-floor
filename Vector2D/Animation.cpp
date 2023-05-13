@@ -2,7 +2,7 @@
 // Animation (Código Fonte)
 // 
 // Criação:     28 Set 2011
-// Atualização: 06 Out 2021
+// Atualização: 01 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Classe para animar sequências em folha de sprites
@@ -135,6 +135,10 @@ void Animation::NextFrame()
 
 void Animation::Draw(uint aFrame, float x, float y, float z, float scale, float rotation, Color color)
 {
+    // ajusta coordenadas usando a viewport
+    x -= Engine::game->viewport.left;
+    y -= Engine::game->viewport.top;
+
     // configura dados básicos
     sprite.x = x;
     sprite.y = y;

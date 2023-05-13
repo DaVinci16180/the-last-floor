@@ -2,7 +2,7 @@
 // Object (Arquivo de Cabeçalho)
 //
 // Criação:     01 Out 2007
-// Atualização: 06 Out 2021
+// Atualização: 01 Nov 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Essa é a classe base para todos objetos do jogo.
@@ -18,41 +18,37 @@
 
 // -----------------------------------------------------------------------------
 
-#include "Types.h"              // usando os tipos personalizados da engine
-#include "Game.h"               // representação de um jogo
-#include "Window.h"             // janela usada para o jogo
-#include "Geometry.h"           // todo objeto deve ter uma bounding box
+#include "Types.h"                              // usando os tipos personalizados da engine
+#include "Game.h"                               // representação de um jogo
+#include "Window.h"                             // janela usada para o jogo
+#include "Geometry.h"                           // todo objeto deve ter uma bounding box
 
 // -----------------------------------------------------------------------------
 
 class Object
 {
 private:
-    float posX, posY, posZ;     // coordenadas do objeto
-    float scaleFactor;          // escala do objeto
-    float rotationAngle;        // rotação do objeto
-    Geometry* bbox;             // bounding box do objeto
+    float posX, posY, posZ;                     // coordenadas (x,y,z)
+    float scaleFactor;                          // fator de escala
+    float rotationAngle;                        // ângulo de rotação
+    Geometry* bbox;                             // bounding box
 
 protected:
-    static Window* & window;    // janela do jogo
-    static Game* & game;        // jogo em que o objeto está inserido
-    static float & gameTime;    // tempo do último quadro
+    static Window* & window;                    // janela do jogo
+    static Game* & game;                        // jogo em execução
+    static float & gameTime;                    // tempo do último quadro
 
-    const float & x = posX;     // coordenada x do objeto
-    const float & y = posY;     // coordenada y do objeto
-    const float & z = posZ;     // coordenada z do objeto
-    
-    // valor da escala do objeto
-    const float & scale = scaleFactor;      
-    
-    // valor da rotação do objeto
-    const float & rotation = rotationAngle; 
+    const float & x = posX;                     // coordenada x do objeto
+    const float & y = posY;                     // coordenada y do objeto
+    const float & z = posZ;                     // coordenada z do objeto
+    const float & scale = scaleFactor;          // valor da escala do objeto
+    const float & rotation = rotationAngle;     // valor da rotação do objeto
 
-    uint type;                  // tipo do objeto
+    uint type;                                  // tipo do objeto
 
 public:
-    Object();                   // construtor
-    virtual ~Object();          // destrutor virtual
+    Object();                                   // construtor
+    virtual ~Object();                          // destrutor virtual
 
     // ------------------------------------------------
     // funções virtuais    
@@ -85,26 +81,26 @@ public:
     // retorna a bounding box do objeto
     virtual Geometry* BBox() const;
 
-    // move o objeto por (deltaX, deltaY, deltaZ)
+    // move o objeto por (dx, dy, dz)
     virtual void Translate(float dx, float dy, float dz = 0.0f);
 
-    // amplia/reduz objeto pelo fator de escala 
+    // move o objeto para as coordenadas (px, py, pz)
+    virtual void MoveTo(float px, float py, float pz);
+
+    // move o objeto para as coordenadas (px, py)
+    virtual void MoveTo(float px, float py);
+
+    // amplia ou reduz objeto pelo fator
     virtual void Scale(float factor);
 
-    // ajusta escala para o valor informado
+    // ajusta escala para novo valor
     virtual void ScaleTo(float value);
 
     // rotaciona geometria por um ângulo
     virtual void Rotate(float angle);
 
-    // ajusta a rotação para o valor informado
+    // ajusta a rotação para novo valor
     virtual void RotateTo(float value);
-
-    // move o objeto para as coordenadas (x,y,z) indicadas
-    virtual void MoveTo(float px, float py, float pz);
-
-    // move o objeto para as coordenadas (x,y) indicadas
-    virtual void MoveTo(float px, float py);
 
     // faz a resolução de colisão do objeto
     virtual void OnCollision(Object* obj);
@@ -135,11 +131,13 @@ inline float Object::Y() const
 
 // retorna coordenada z do objeto
 inline float Object::Z() const
-{ return posZ; }
+{ return posY; }
 
+// retorna a escala do objeto
 inline float Object::Scale() const
 { return scaleFactor; }
 
+// retorna a rotação do objeto
 inline float Object::Rotation() const
 { return rotationAngle; }
 
