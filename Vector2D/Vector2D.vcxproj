@@ -176,12 +176,12 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="Level1.cpp" />
-    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Presence.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -190,8 +190,8 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Trail.cpp" />
     <ClCompile Include="Vector.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -209,12 +209,12 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="Level1.h" />
-    <ClInclude Include="Missile.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Presence.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Room.h" />
@@ -224,8 +224,8 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Trail.h" />
     <ClInclude Include="Vector.h" />
-    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />

@@ -84,17 +84,8 @@
     <ClCompile Include="Window.cpp">
       <Filter>Engine\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2D.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Vector.cpp">
       <Filter>Engine\Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Index.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
@@ -122,6 +113,15 @@
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Trail.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Engine\Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Engine\Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,17 +185,8 @@
     <ClInclude Include="Resources.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>Engine\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Index.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
@@ -223,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Trail.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Engine\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Engine\Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,9 @@ Projectile::Projectile(Player* player, Image* img, float angle)
     // move para posição
     MoveTo(player->X(), player->Y());
 
+    //trail = new Trail(player->X(), player->Y(), player->Angle() + angle);
+    //Level1::scene->Add(trail, STATIC);
+
     BBox(new Circle(10));
 }
 
@@ -41,6 +44,7 @@ Projectile::Projectile(Player* player, Image* img, float angle)
 Projectile::~Projectile()
 {
     delete sprite;
+    delete trail;
 }
 
 // -------------------------------------------------------------------------------
@@ -53,6 +57,7 @@ void Projectile::Update()
     // se o míssil sair da janela
     if (x > window->Width() || x < 0 || y > window->Height() || y < 0)
     {
+        //trail->TurnOff();
         Level1::scene->Delete();
     }
 }
@@ -60,6 +65,7 @@ void Projectile::Update()
 void Projectile::OnCollision(Object* obj) {
     if (obj->Type() == WALL) {
         MoveTo(-10, -10);
+        //trail->TurnOff();
     }
 }
 

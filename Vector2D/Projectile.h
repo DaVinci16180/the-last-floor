@@ -19,6 +19,7 @@
 #include "Sprite.h"                             // desenho de sprites
 #include "Vector.h"                             // representação de vetor
 #include "Player.h"                              // objeto avião
+#include "Trail.h"                              // objeto avião
 
 // --------------------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ class Projectile : public Object
 public:
     Sprite* sprite;                            // sprite do míssil
     Vector speed;                               // velocidade do míssil
+    Trail* trail;
 
 public:
     Projectile(Player* player, Image* img, float angle);        // construtor

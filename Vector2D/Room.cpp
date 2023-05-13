@@ -24,7 +24,7 @@ Room::Room(float posX, float posY, string light, string dark, Geometry* bbox)
     //sprite = new Sprite(lightImage);
 
     BBox(bbox);
-    MoveTo(posX, posY, Layer::MIDDLE);
+    MoveTo(posX, posY, Layer::BACK);
 }
 
 // ---------------------------------------------------------------------------------

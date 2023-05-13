@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Código Fonte)
+// Player (CÃ³digo Fonte)
 //
-// Criação:     20 Abr 2012
-// Atualização: 27 Set 2021
+// CriaÃ§Ã£o:     20 Abr 2012
+// AtualizaÃ§Ã£o: 27 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Define uma classe para o jogador
+// DescriÃ§Ã£o:   Define uma classe para o jogador
 //
 **********************************************************************************/
 
@@ -34,18 +34,18 @@ Player::Player()
 
     projectile = new Image("Resources/Projectile.png");
 
-    // posição, escala e rotação inicial do player
+    // posiÃ§Ã£o, escala e rotaÃ§Ã£o inicial do player
     MoveTo(window->CenterX(), window->CenterY(), Layer::FRONT);
     RotateTo(90);
 
-    // direção inicial do player
+    // direÃ§Ã£o inicial do player
     direction.RotateTo(90.0f);
     direction.ScaleTo(1.0f);
 
     tileset = new TileSet("Resources/Player.png", 30, 30, 6, 12);
     anim = new Animation(tileset, 0.07f, true);
 
-    // sequências de animação do player
+    // sequÃªncias de animaÃ§Ã£o do player
     uint walking[12] = { 0,1,2,3,4,5,6,7,8,9,10,11 };
     uint still[1] = { 0 };
 
@@ -128,13 +128,13 @@ void Player::OnCollision(Object* obj)
 void Player::Update()
 {
     float delta = 250 * gameTime;
-    // Movimentação do personagem
+    // MovimentaÃ§Ã£o do personagem
     if (gamepadOn)
     {
-        // lê estado atualizado do controle
+        // lÃª estado atualizado do controle
         gamepad->UpdateState();
 
-        // movimenta com o analógico esquerdo
+        // movimenta com o analÃ³gico esquerdo
         Translate(gamepad->Axis(AxisX) * 0.15f * gameTime, gamepad->Axis(AxisY) * 0.15f * gameTime);
 
         if (gamepad->Axis(AxisX) != 0 || gamepad->Axis(AxisY) != 0) {
@@ -161,7 +161,7 @@ void Player::Update()
             RotateTo(graus);
         }
 
-        // reinicia posição do player
+        // reinicia posiÃ§Ã£o do player
         if (gamepad->ButtonPress(START))
         {
             Reset();
@@ -216,14 +216,14 @@ void Player::Update()
             switch (equipment)
             {
             case PISTOL:
-                if (gunTimer.Elapsed(0.1)) {
+                if (gunTimer.Elapsed(0.1f)) {
                     gunTimer.Reset();
                     Index::audio->Play(GUN_SOUND);
                     Level1::scene->Add(new Projectile(this, projectile, 0), MOVING);
                 }
                 break;
             case SHOTGUN:
-                if (gunTimer.Elapsed(1)) {
+                if (gunTimer.Elapsed(1.0f)) {
                     gunTimer.Reset();
                     Index::audio->Play(SHOTGUN_SOUND);
                     Level1::scene->Add(new Projectile(this, projectile, 4), MOVING);
@@ -265,7 +265,7 @@ void Player::Update()
         }
     }
 
-    // atualiza animação
+    // atualiza animaÃ§Ã£o
     anim->Select(equipment);
     anim->NextFrame();
 }

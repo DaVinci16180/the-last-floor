@@ -1,11 +1,11 @@
 /**********************************************************************************
-// GravityGuy (Arquivo de Cabeçalho)
+// GravityGuy (Arquivo de Cabeï¿½alho)
 //
-// Criação:     05 Out 2011
-// Atualização: 27 Set 2021
+// Criaï¿½ï¿½o:     05 Out 2011
+// Atualizaï¿½ï¿½o: 27 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Jogo estilo plataforma usando a engine do curso
+// Descriï¿½ï¿½o:   Jogo estilo plataforma usando a engine do curso
 //
 **********************************************************************************/
 
@@ -23,28 +23,28 @@
 // ------------------------------------------------------------------------------
 
 enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION, LIGHT_SWITCH };
-enum Types  { PLAYER, ZOMBIE, WALL, ROOM, PROJECTILE, PRESENCE };
+enum Types  { PLAYER=0, ZOMBIE=1, WALL=2, ROOM=3, PROJECTILE=4, PRESENCE=5, TRAIL=6 };
 
 // ------------------------------------------------------------------------------
 
 class Index : public Game
 {
 private:
-    static Game* level;            // nível atual do jogo
+    static Game* level;            // nï¿½vel atual do jogo
 
 public:
     static Player* player;         // jogador 
     static Presence* presence;
-    static Audio* audio;           // sistema de áudio
+    static Audio* audio;           // sistema de ï¿½udio
     static bool viewBBox;           // estado da bounding box
 
     void Init();                    // inicializa jogo
-    void Update();                  // atualiza lógica do jogo
+    void Update();                  // atualiza lï¿½gica do jogo
     void Draw();                    // desenha jogo
     void Finalize();                // finaliza jogo
 
     template<class T>
-    static void NextLevel()         // muda para próximo nível do jogo
+    static void NextLevel()         // muda para prï¿½ximo nï¿½vel do jogo
     {
         if (level)
         {
