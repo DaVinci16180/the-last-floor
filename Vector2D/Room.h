@@ -39,6 +39,7 @@ public:
     void Update();                          // atualização do objeto
     void Draw();                            // desenho do objeto
     void OnCollision(Object* obj);     // resolução da colisão
+    bool Lit();
 };
 
 // ---------------------------------------------------------------------------------
@@ -47,6 +48,10 @@ public:
 inline void Room::Draw()
 {
     sprite->Draw(x, y, z);
+}
+
+inline bool Room::Lit() {
+    return lit;
 }
 
 // ---------------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "Wall.h"
+#include "Zombie.h"
 
 #include <string>
 #include <fstream>
@@ -165,6 +166,8 @@ void Level1::Init()
         Coordinates c = paredes[i];
         scene->Add(new Wall(c.x, c.y, c.width, c.height), STATIC);
     }
+
+    scene->Add(new Zombie(900, 540), MOVING);
 
     // inicia com música
     Index::audio->Play(GONG);

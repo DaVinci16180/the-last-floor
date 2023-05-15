@@ -22,7 +22,8 @@
 #include "Types.h"                  // tipos específicos do motor
 #include "Controller.h"             // leitura do controle
 #include "Font.h"                   // exibição de texto
-#include <sstream>                                
+#include <sstream>     
+#include <iomanip>
 
 // ------------------------------------------------------------------------------
 
@@ -38,20 +39,23 @@ private:
     TileSet*     tileset;                // folha de sprites do personagem
     Animation*   anim;                   // animação do personagem
     uint         equipment;              // equipamento do jogador
-    uint         hp;
     int          level;                  // nível finalizado
     Timer        gunTimer;
+    uint         hp;
+    uint         pistolRounds;
+    uint         shotgunShells;
 
     Sprite*      equipmentSprite;
     Sprite*      bulletSprite;
     Sprite*      hpSprite;
+    Font*        font;
 
-    Controller* gamepad;           // entrada via controle
-    bool gamepadOn;                 // controle conectado
+    Controller*  gamepad;           // entrada via controle
+    bool         gamepadOn;                 // controle conectado
 
-    Sprite* sprite;                // sprite do avião
-    Image* projectile;                // imagem do míssil
-    Vector direction;               // direção do avião
+    Sprite*      sprite;                // sprite do player
+    Image*       projectile;                // imagem do míssil
+    Vector       direction;               // direção do avião
 public:
     Player();                           // construtor
     ~Player();                          // destrutor
@@ -66,6 +70,10 @@ public:
     void OnCollision(Object* obj);     // resolução da colisão
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
+
+    void Shoot();
+    void AddPistolAmmo(int amount);
+    void AddShotgunAmmo(int amount);
 };
 
 // ---------------------------------------------------------------------------------
@@ -74,14 +82,6 @@ public:
 inline int Player::Level()
 {
     return level;
-}
-
-inline void Player::Draw()
-{
-    anim->Draw(x, y, Layer::UPPER, scale, rotation);
-    equipmentSprite->Draw(100, 50, Layer::FRONT, 0.7, 0, Color({1, 1, 1, 0.8}));
-    hpSprite->Draw(1880, 40, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
-    bulletSprite->Draw(1880, 100, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
 }
 
 inline float Player::Angle()

@@ -14,12 +14,16 @@
 #include "Level1.h"
 #include "Projectile.h"
 #include "Wall.h"
+#include "Engine.h"
 #include <cmath>
 
 // ---------------------------------------------------------------------------------
 
 Player::Player()
 {
+    font = new Font("Resources/FFFForward.png");
+    font->Spacing(70);
+
     type = PLAYER;
     gunTimer.Start();
 
@@ -42,7 +46,7 @@ Player::Player()
     direction.RotateTo(90.0f);
     direction.ScaleTo(1.0f);
 
-    tileset = new TileSet("Resources/Player.png", 30, 30, 6, 12);
+    tileset = new TileSet("Resources/Feet.png", 480, 480, 6, 12);
     anim = new Animation(tileset, 0.07f, true);
 
     // sequências de animação do player
@@ -52,11 +56,18 @@ Player::Player()
     anim->Add(STILL, still, 1);
     anim->Add(WALKING, walking, 12);
 
+    sprite = new Sprite("Resources/Player.png");
+
+    ScaleTo(0.07f);
+
     // cria bounding box
-    BBox(new Circle(12));
+    BBox(new Circle(12 * (1 / 0.07f)));
 
     // inicializa estado do player
     equipment = PISTOL;
+    shotgunShells = 4;
+    pistolRounds = 12;
+    hp = 3;
     level = 0;
 }
 
@@ -64,8 +75,34 @@ Player::Player()
 
 Player::~Player()
 {
-    delete anim;
     delete tileset;
+    delete anim;
+    delete equipmentSprite;
+    delete bulletSprite;
+    delete hpSprite;
+    delete font;
+    delete gamepad;
+    delete sprite;
+    delete projectile;
+}
+
+void Player::Draw()
+{
+    anim->Draw(x, y, Layer::UPPER, scale, rotation);
+    sprite->Draw(x, y, Layer::FRONT, scale, rotation);
+    equipmentSprite->Draw(100, 50, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
+    hpSprite->Draw(1880, 40, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
+    bulletSprite->Draw(1880, 100, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
+
+    Color grey(1.0f, 1.0f, 1.0f, 0.8f);
+
+    std::ostringstream health;
+    health << std::setw(2) << std::setfill('0') << hp;
+    font->Draw(1830, 40, health.str(), grey, Layer::FRONT, 0.2f);
+
+    std::ostringstream bullets;
+    bullets << std::setw(2) << std::setfill('0') << (equipment == PISTOL ? pistolRounds : shotgunShells);
+    font->Draw(1830, 100, bullets.str(), grey, Layer::FRONT, 0.2f);
 }
 
 
@@ -145,8 +182,10 @@ void Player::Update()
             double graus = radianos * 180 / 3.14159;
             RotateTo(graus);
 
+            float speed = 1 / (max(abs(xx), abs(yy)) * 0.02);
+
             anim->Select(WALKING);
-            anim->Delay(1 / (max(abs(xx), abs(yy)) * 0.03));
+            anim->Delay(speed);
         }
         else {
             anim->Select(STILL);
@@ -213,29 +252,7 @@ void Player::Update()
         // dispara
         if (gamepad->ButtonPress(5))
         {
-            switch (equipment)
-            {
-            case PISTOL:
-                if (gunTimer.Elapsed(0.1f)) {
-                    gunTimer.Reset();
-                    Index::audio->Play(GUN_SOUND);
-                    Level1::scene->Add(new Projectile(this, projectile, 0), MOVING);
-                }
-                break;
-            case SHOTGUN:
-                if (gunTimer.Elapsed(1.0f)) {
-                    gunTimer.Reset();
-                    Index::audio->Play(SHOTGUN_SOUND);
-                    Level1::scene->Add(new Projectile(this, projectile, 4), MOVING);
-                    Level1::scene->Add(new Projectile(this, projectile, 10), MOVING);
-                    Level1::scene->Add(new Projectile(this, projectile, -4), MOVING);
-                    Level1::scene->Add(new Projectile(this, projectile, -10), MOVING);
-                }
-                break;
-            default:
-                break;
-            }
-            
+            Shoot();
         }
     }
     else {
@@ -270,5 +287,41 @@ void Player::Update()
     anim->NextFrame();
 }
 
+void Player::Shoot() {
+    switch (equipment)
+    {
+    case PISTOL:
+        if (gunTimer.Elapsed(0.1f) && pistolRounds > 0) {
+            gunTimer.Reset();
+            Index::audio->Play(GUN_SOUND);
+            Level1::scene->Add(new Projectile(this, projectile, 0), MOVING);
+
+            pistolRounds--;
+        }
+        break;
+    case SHOTGUN:
+        if (gunTimer.Elapsed(1.0f) && shotgunShells > 0) {
+            gunTimer.Reset();
+            Index::audio->Play(SHOTGUN_SOUND);
+            Level1::scene->Add(new Projectile(this, projectile, 4), MOVING);
+            Level1::scene->Add(new Projectile(this, projectile, 10), MOVING);
+            Level1::scene->Add(new Projectile(this, projectile, -4), MOVING);
+            Level1::scene->Add(new Projectile(this, projectile, -10), MOVING);
+
+            shotgunShells--;
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void Player::AddPistolAmmo(int amount) {
+    pistolRounds += amount;
+}
+
+void Player::AddShotgunAmmo(int amount) {
+    shotgunShells += amount;
+}
 
 // ---------------------------------------------------------------------------------

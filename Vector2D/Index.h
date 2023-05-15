@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------
 
 enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION, LIGHT_SWITCH };
-enum Types  { PLAYER=0, ZOMBIE=1, WALL=2, ROOM=3, PROJECTILE=4, PRESENCE=5, TRAIL=6 };
+enum Types  { PLAYER=0, ZOMBIE=1, WALL=2, ROOM=3, PROJECTILE=4, PRESENCE=5, TRAIL=6, BLOOD=7, DROP=8 };
 
 // ------------------------------------------------------------------------------
 

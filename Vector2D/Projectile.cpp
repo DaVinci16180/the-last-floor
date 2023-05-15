@@ -63,7 +63,7 @@ void Projectile::Update()
 }
 
 void Projectile::OnCollision(Object* obj) {
-    if (obj->Type() == WALL) {
+    if (obj->Type() == WALL || obj->Type() == ZOMBIE) {
         MoveTo(-10, -10);
         //trail->TurnOff();
     }

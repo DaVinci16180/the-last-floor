@@ -45,22 +45,25 @@ void Home::Update()
         {
             window->Close();
         }
-    }
-    else {
-        // sai com o pressionar do ESC
-        if (window->KeyPress(VK_ESCAPE))
-            window->Close();
-
-        // se a tecla ENTER for pressionada
-        if (window->KeyPress(VK_RETURN))
-        {
-            Index::audio->Stop(RAIN);
-            Index::NextLevel<Level1>();
-        }
         else
         {
             anim->NextFrame();
         }
+    }
+
+    // sai com o pressionar do ESC
+    if (window->KeyPress(VK_ESCAPE))
+        window->Close();
+
+    // se a tecla ENTER for pressionada
+    if (window->KeyPress(VK_RETURN))
+    {
+        Index::audio->Stop(RAIN);
+        Index::NextLevel<Level1>();
+    }
+    else if (!gamepadOn)
+    {
+        anim->NextFrame();
     }
 }
 
