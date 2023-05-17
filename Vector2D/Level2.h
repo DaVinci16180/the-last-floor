@@ -9,8 +9,8 @@
 //
 **********************************************************************************/
 
-#ifndef _LEVEL1_H_
-#define _LEVEL1_H_
+#ifndef _LEVEL2_H_
+#define _LEVEL2_H_
 
 // ------------------------------------------------------------------------------
 // Inclusões
@@ -22,8 +22,7 @@
 // ------------------------------------------------------------------------------
 
 
-
-class Level1 : public Game
+class Level2 : public Game
 {
 private:
     //Background* backg = nullptr;   // pano de fundo animado

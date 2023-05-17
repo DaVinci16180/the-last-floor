@@ -26,6 +26,12 @@ enum Sounds { RAIN, GONG, GUN_SOUND, SHOTGUN_SOUND, MUSIC, TRANSITION, LIGHT_SWI
 enum Types  { PLAYER=0, ZOMBIE=1, WALL=2, ROOM=3, PROJECTILE=4, PRESENCE=5, TRAIL=6, BLOOD=7, DROP=8, CHASE=6 };
 
 // ------------------------------------------------------------------------------
+struct Coordinates {
+    int x;
+    int y;
+    int width;
+    int height;
+};
 
 class Index : public Game
 {

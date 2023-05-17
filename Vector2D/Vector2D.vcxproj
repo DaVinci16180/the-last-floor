@@ -179,6 +179,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Level2.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Level2.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Player.h" />

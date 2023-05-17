@@ -13,6 +13,7 @@
 #include "Index.h"
 #include "Home.h"
 #include "Level1.h"
+#include "Level2.h"
 
 // ------------------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ void Home::Update()
     if (window->KeyPress(VK_RETURN))
     {
         Index::audio->Stop(RAIN);
-        Index::NextLevel<Level1>();
+        Index::NextLevel<Level2>();
     }
     else if (!gamepadOn)
     {
