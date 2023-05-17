@@ -181,6 +181,7 @@
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Particles.cpp" />
+    <ClCompile Include="Perception.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Presence.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -198,8 +199,6 @@
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Zombie.cpp" />
-    <ClCompile Include="Chase.cpp" />
-    <ClCompile Include="Chase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -220,6 +219,7 @@
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Particles.h" />
+    <ClInclude Include="Perception.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Presence.h" />
     <ClInclude Include="Projectile.h" />

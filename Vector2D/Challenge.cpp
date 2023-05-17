@@ -60,6 +60,8 @@ void Challenge::Update()
         Level1::scene->Delete(this, STATIC);
 
         // empurra
+        Index::player->Push(zombie->X(), zombie->Y());
+        zombie->Push(Index::player->X(), Index::player->Y());
     }
     else {
         playerAndZombieAnim->NextFrame();

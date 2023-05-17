@@ -16,12 +16,15 @@
 #include "Wall.h"
 #include "Engine.h"
 #include "Challenge.h"
+#include "Zombie.h"
 #include <cmath>
 
 // ---------------------------------------------------------------------------------
 
 Player::Player()
 {
+    push.ScaleTo(0.f);
+
     font = new Font("Resources/FFFForward.png");
     font->Spacing(70);
 
@@ -164,7 +167,6 @@ void Player::OnCollision(Object* obj)
         Zombie* z = dynamic_cast<Zombie*>(obj);
         Index::challenge = true;
 
-        Translate(10, 0);
         Level1::scene->Add(new Challenge(z), STATIC);
     }
 }
@@ -173,6 +175,17 @@ void Player::OnCollision(Object* obj)
 
 void Player::Update()
 {
+    if (Index::challenge)
+        return;
+
+    if (push.Magnitude() != 0) {
+        push.Scale(0.93);
+        Translate(push.XComponent() * 50.0f * gameTime, -push.YComponent() * 50.0f * gameTime);
+    }
+    if (push.Magnitude() <= 0.2) {
+        push.ScaleTo(0);
+    }
+
     float delta = 250 * gameTime;
     // Movimentação do personagem
     if (gamepadOn)
@@ -331,6 +344,13 @@ void Player::AddPistolAmmo(int amount) {
 
 void Player::AddShotgunAmmo(int amount) {
     shotgunShells += amount;
+}
+
+void Player::Push(float zX, float zY) {
+    push = Vector(Line::Angle(Point(x, y), Point(zX, zY)), 10.f);
+    push.Rotate(180);
+
+    Translate(push.XComponent() * 50.0f * gameTime, -push.YComponent() * 50.0f * gameTime);
 }
 
 // ---------------------------------------------------------------------------------
