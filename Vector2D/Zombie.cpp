@@ -19,13 +19,14 @@
 #include "Random.h"
 #include "Drop.h"
 #include <cmath>
+#include "Player.h" 
 
 // ---------------------------------------------------------------------------------
 
-Zombie::Zombie(int x, int y)
+Zombie::Zombie(int x, int y, Player* p)
 {
     type = ZOMBIE;
-
+    player = p;
     MoveTo(x, y, Layer::FRONT);
     RotateTo(90);
 
@@ -39,8 +40,8 @@ Zombie::Zombie(int x, int y)
     sprite = new Sprite("Resources/Zombie.png");
 
     // cria bounding box
-    BBox(new Circle(14 * (1 / 0.07f)));
-
+    BBox(new Circle(16 * (1 / 0.07f)));
+    BBox(new Circle(20 * (1 / 0.07f)));
     ScaleTo(0.07f);
 
     hp = 4;
@@ -130,6 +131,7 @@ void Zombie::OnCollision(Object* obj)
 
 void Zombie::Update()
 {
+
     float delta = 250 * gameTime;
 
     if (hp <= 0) {
@@ -147,8 +149,19 @@ void Zombie::Update()
             Level1::scene->Add(new Drop(x, y, SHOTGUN, amount), STATIC);
         }
     }
+   
+       
     
     feet->NextFrame();
 }
+void Zombie::Chase() {
+    direction.RotateTo(Line::Angle(Point(x, y), Point(player->X(), player->Y())));
+    RotateTo(Line::Angle(Point(x, y), Point(player->X(), player->Y())));
+
+    // movimenta objeto pelo seu vetor velocidade
+    Translate(direction.XComponent() * 50.0f * gameTime, -direction.YComponent() * 50.0f * gameTime);
+}
+
+
 
 // ---------------------------------------------------------------------------------

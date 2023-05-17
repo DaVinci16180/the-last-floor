@@ -17,7 +17,7 @@
 #include "Room.h"
 #include "Wall.h"
 #include "Zombie.h"
-
+#include "Chase.h"
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -167,8 +167,10 @@ void Level1::Init()
         scene->Add(new Wall(c.x, c.y, c.width, c.height), STATIC);
     }
 
-    scene->Add(new Zombie(900, 540), MOVING);
-
+    Zombie* z = new Zombie(900, 540, Index::player);
+    scene->Add(z, MOVING);
+    Chase* chase = new Chase(z);
+    scene->Add(chase, MOVING);
     // inicia com música
     Index::audio->Play(GONG);
 }

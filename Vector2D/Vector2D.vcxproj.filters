@@ -135,6 +135,12 @@
     <ClCompile Include="Challenge.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Chase.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClCompile>
+    <ClCompile Include="Chase.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
