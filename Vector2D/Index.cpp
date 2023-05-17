@@ -22,6 +22,7 @@ Player* Index::player = nullptr;
 Presence* Index::presence = nullptr;
 Audio* Index::audio = nullptr;
 bool    Index::viewBBox = true;
+bool    Index::challenge = false;
 
 // ------------------------------------------------------------------------------
 

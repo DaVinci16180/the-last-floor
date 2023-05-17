@@ -32,8 +32,9 @@ private:
     Animation* feet;                   // animação do personagem
     int         hp;
 
-    Sprite* sprite;
-    Vector direction;               // direção do avião
+    Sprite*      sprite;
+    Vector       direction;               // direção do avião
+    Vector       push;
 public:
     Zombie(int x, int y);                           // construtor
     ~Zombie();                          // destrutor

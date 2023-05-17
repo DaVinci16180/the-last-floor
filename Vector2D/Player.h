@@ -56,6 +56,7 @@ private:
     Sprite*      sprite;                // sprite do player
     Image*       projectile;                // imagem do míssil
     Vector       direction;               // direção do avião
+    Vector       push;
 public:
     Player();                           // construtor
     ~Player();                          // destrutor

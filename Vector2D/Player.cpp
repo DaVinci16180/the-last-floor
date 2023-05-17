@@ -160,9 +160,12 @@ void Player::OnCollision(Object* obj)
         }
     }
 
-    if (obj->Type() == ZOMBIE) {
+    if (obj->Type() == ZOMBIE && !Index::challenge) {
+        Zombie* z = dynamic_cast<Zombie*>(obj);
+        Index::challenge = true;
+
         Translate(10, 0);
-        Level1::scene->Add(new Challenge(), STATIC);
+        Level1::scene->Add(new Challenge(z), STATIC);
     }
 }
 

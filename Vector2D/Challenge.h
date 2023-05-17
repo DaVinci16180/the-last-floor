@@ -20,6 +20,7 @@
 #include "Vector.h"                             // representação de vetor
 #include "Player.h"                              // objeto avião
 #include "Trail.h"                              // objeto avião
+#include "Zombie.h"                              // objeto avião
 
 // --------------------------------------------------------------------------------
 
@@ -42,8 +43,10 @@ public:
     Controller* gamepad;
     bool        gamepadOn;
 
+    Zombie* zombie;
+
 public:
-    Challenge();        // construtor
+    Challenge(Zombie* z);        // construtor
     ~Challenge();                                 // destrutor
 
     void Update();                              // atualização
