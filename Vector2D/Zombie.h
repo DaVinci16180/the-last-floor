@@ -52,8 +52,8 @@ public:
 
 inline void Zombie::Draw()
 {
-    feet->Draw(x, y, Layer::UPPER, scale, rotation);
-    sprite->Draw(x, y, Layer::FRONT, scale, rotation);
+    feet->Draw(x, y, Layer::MIDDLE, scale, rotation);
+    sprite->Draw(x, y, Layer::UPPER, scale, rotation);
 }
 
 inline float Zombie::Angle()

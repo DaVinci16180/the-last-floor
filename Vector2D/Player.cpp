@@ -15,6 +15,7 @@
 #include "Projectile.h"
 #include "Wall.h"
 #include "Engine.h"
+#include "Challenge.h"
 #include <cmath>
 
 // ---------------------------------------------------------------------------------
@@ -88,8 +89,8 @@ Player::~Player()
 
 void Player::Draw()
 {
-    anim->Draw(x, y, Layer::UPPER, scale, rotation);
-    sprite->Draw(x, y, Layer::FRONT, scale, rotation);
+    anim->Draw(x, y, Layer::MIDDLE, scale, rotation);
+    sprite->Draw(x, y, Layer::UPPER, scale, rotation);
     equipmentSprite->Draw(100, 50, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
     hpSprite->Draw(1880, 40, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
     bulletSprite->Draw(1880, 100, Layer::FRONT, 0.7, 0, Color({ 1, 1, 1, 0.8 }));
@@ -157,6 +158,11 @@ void Player::OnCollision(Object* obj)
         else if (y <= top) {
             MoveTo(X(), wall->Y() - 12);
         }
+    }
+
+    if (obj->Type() == ZOMBIE) {
+        Translate(10, 0);
+        Level1::scene->Add(new Challenge(), STATIC);
     }
 }
 
