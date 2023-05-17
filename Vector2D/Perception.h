@@ -1,5 +1,5 @@
 /**********************************************************************************
-// Challenge (Arquivo de Cabeçalho)
+// Perception (Arquivo de Cabeçalho)
 //
 // Criação:     23 Nov 2011
 // Atualização: 13 Out 2021
@@ -9,8 +9,8 @@
 //
 **********************************************************************************/
 
-#ifndef _DROP_H_
-#define _DROP_H_
+#ifndef _PERCEPTION_H_
+#define _PERCEPTION_H_
 
 // --------------------------------------------------------------------------------
 
@@ -24,36 +24,20 @@
 
 // --------------------------------------------------------------------------------
 
-class Challenge : public Object
+class Perception : public Object
 {
-public:
-    Sprite* background;
-    Sprite* frame;
-
-    TileSet* playerAndZombie;
-    Animation* playerAndZombieAnim;
-
-    TileSet* buttonPunch;
-    Animation* buttonPunchAnim;
-
-    Timer timer;
-    Timer decreaseTimer;
-    int counter;
-
-    Controller* gamepad;
-    bool        gamepadOn;
-
-    Zombie* zombie;
+private:
+    Zombie* zombie = nullptr;
 
 public:
-    Challenge(Zombie* z);        // construtor
-    ~Challenge();                                 // destrutor
+    Perception(Zombie* z);        // construtor
+    ~Perception();                                 // destrutor
 
     void Update();                              // atualização
-    void Draw();                                // desenho
+    void OnCollision(Object* obj);     // resolução da colisão
+    void Draw();     // resolução da colisão
 };
 
 // ------------------------------------------------------------------------------
 
 #endif
-#pragma once

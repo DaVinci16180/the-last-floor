@@ -15,8 +15,9 @@
 
 // ------------------------------------------------------------------------------
 
-Challenge::Challenge()
+Challenge::Challenge(Zombie* z)
 {
+    zombie = z;
     counter = 0;
     timer.Start();
     decreaseTimer.Start();
@@ -55,7 +56,12 @@ void Challenge::Update()
     if (timer.Elapsed(10.f)) {
         window->Close();
     } else if (counter >= 20) {
+        Index::challenge = false;
         Level1::scene->Delete(this, STATIC);
+
+        // empurra
+        Index::player->Push(zombie->X(), zombie->Y());
+        zombie->Push(Index::player->X(), Index::player->Y());
     }
     else {
         playerAndZombieAnim->NextFrame();
@@ -76,6 +82,9 @@ void Challenge::Update()
                 counter++;
             }
         }
+
+        if (window->KeyPress(VK_SPACE))
+            counter++;
     }
 }
 

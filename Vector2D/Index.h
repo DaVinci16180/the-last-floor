@@ -44,6 +44,8 @@ public:
     static Audio* audio;           // sistema de �udio
     static bool viewBBox;           // estado da bounding box
 
+    static bool challenge;
+
     void Init();                    // inicializa jogo
     void Update();                  // atualiza l�gica do jogo
     void Draw();                    // desenha jogo

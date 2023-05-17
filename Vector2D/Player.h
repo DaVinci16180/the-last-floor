@@ -22,6 +22,7 @@
 #include "Types.h"                  // tipos específicos do motor
 #include "Controller.h"             // leitura do controle
 #include "Font.h"                   // exibição de texto
+#include "Zombie.h"
 #include <sstream>     
 #include <iomanip>
 
@@ -56,6 +57,7 @@ private:
     Sprite*      sprite;                // sprite do player
     Image*       projectile;                // imagem do míssil
     Vector       direction;               // direção do avião
+    Vector       push;
 public:
     Player();                           // construtor
     ~Player();                          // destrutor
@@ -74,6 +76,8 @@ public:
     void Shoot();
     void AddPistolAmmo(int amount);
     void AddShotgunAmmo(int amount);
+
+    void Push(float zX, float zY);
 };
 
 // ---------------------------------------------------------------------------------

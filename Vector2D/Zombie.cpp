@@ -23,10 +23,9 @@
 
 // ---------------------------------------------------------------------------------
 
-Zombie::Zombie(int x, int y, Player* p)
+Zombie::Zombie(int x, int y)
 {
     type = ZOMBIE;
-    player = p;
     MoveTo(x, y, Layer::FRONT);
     RotateTo(90);
 
@@ -131,8 +130,15 @@ void Zombie::OnCollision(Object* obj)
 
 void Zombie::Update()
 {
+    if (push.Magnitude() != 0) {
+        push.Scale(0.95);
+        Translate(push.XComponent() * 50.0f * gameTime, -push.YComponent() * 50.0f * gameTime);
+    }
+    if (push.Magnitude() <= 0.2) {
+        push.ScaleTo(0);
+    }
 
-    float delta = 250 * gameTime;
+    float delta = 400 * gameTime;
 
     if (hp <= 0) {
         Level1::scene->Delete(this, MOVING);
@@ -155,13 +161,20 @@ void Zombie::Update()
     feet->NextFrame();
 }
 void Zombie::Chase() {
-    direction.RotateTo(Line::Angle(Point(x, y), Point(player->X(), player->Y())));
-    RotateTo(Line::Angle(Point(x, y), Point(player->X(), player->Y())));
+    if (!Index::challenge && hp > 0) {
+        direction.RotateTo(Line::Angle(Point(x, y), Point(Index::player->X(), Index::player->Y())));
+        RotateTo(Line::Angle(Point(x, y), Point(Index::player->X(), Index::player->Y())));
 
-    // movimenta objeto pelo seu vetor velocidade
-    Translate(direction.XComponent() * 50.0f * gameTime, -direction.YComponent() * 50.0f * gameTime);
+        // movimenta objeto pelo seu vetor velocidade
+        Translate(direction.XComponent() * 50.0f * gameTime, -direction.YComponent() * 50.0f * gameTime);
+    }
 }
 
+void Zombie::Push(float pX, float pY) {
+    push = Vector(Line::Angle(Point(x, y), Point(pX, pY)), 10.f);
+    push.Rotate(180);
 
+    Translate(push.XComponent() * 50.0f * gameTime, -push.YComponent() * 50.0f * gameTime);
+}
 
 // ---------------------------------------------------------------------------------
