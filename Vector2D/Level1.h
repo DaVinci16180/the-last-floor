@@ -18,7 +18,6 @@
 #include "Game.h"
 #include "Scene.h"
 #include "Player.h"
-#include "Chase.h"
 // ------------------------------------------------------------------------------
 
 

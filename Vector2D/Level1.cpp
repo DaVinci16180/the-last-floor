@@ -17,7 +17,7 @@
 #include "Room.h"
 #include "Wall.h"
 #include "Zombie.h"
-#include "Chase.h"
+
 #include "Perception.h"
 #include <string>
 #include <fstream>
