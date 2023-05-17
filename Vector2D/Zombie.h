@@ -19,7 +19,7 @@
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // animação de sprites
 #include "Vector.h"                 // representação de vetor
-
+#include "Player.h" 
 // ------------------------------------------------------------------------------
 
 
@@ -36,16 +36,20 @@ private:
     Vector       direction;               // direção do avião
     Vector       push;
 public:
-    Zombie(int x, int y);                           // construtor
+    Zombie(int x, int y, Player* p);                           // construtor
     ~Zombie();                          // destrutor
 
     float Angle();                  // retorna ângulo do vetor direção
     void Rotate(float angle);       // rotação (sobrescreve método)
     void RotateTo(float angle);
-
+    
     void OnCollision(Object* obj);     // resolução da colisão
     void Update();                      // atualização do objeto
-    void Draw();                        // desenho do objeto
+    void Draw();   
+    
+    void Chase();                     // desenho do objeto
+
+
 };
 
 // ---------------------------------------------------------------------------------
